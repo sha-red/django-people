@@ -30,7 +30,10 @@ setup(
         # 'Django>=1.9', commented out to make `pip install -U` easier
         'django-admin-steroids',
         'django-polymorphic',
-        'git+https://projects.c--y.net/erik/django-shared-utils.git#egg=shared-utils'
+        'django-shared-utils',
+    ],
+    dependency_links=[
+        'git+ssh://gogs@projects.c--y.net/erik/django-shared-utils.git#egg=django-shared-utils',
     ],
     extras_require={
         'all': [
