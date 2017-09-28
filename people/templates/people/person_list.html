@@ -1,0 +1,27 @@
+{% extends "base_site.html" %}
+
+
+{% block main %}
+	<nav class="alphabet">
+		{% for letter in alphabet %}
+		<a href="{% url 'person-list-letter' letter=letter %}">{{ letter|upper }}</a>
+		{% endfor %}
+	</nav>
+
+	<section class="alphabetical-list">
+		{% for p in object_list %}
+				{% ifchanged p.sort_name.0|slugify %}
+					{% if not forloop.first %}</ul>{% endif %}
+				<h3>{{ p.sort_name.0|slugify|upper }}</h3>
+				<ul>
+				{% endifchanged %}
+					<li id="{{ p.slug }}">
+						<a href="{{ p.get_absolute_url }}">{{ p.name }}{% if p.main_person %} [= {{ p.main_person.name }}]{% endif %}</a>
+					</li>
+			{% if forloop.last %}
+				</ul>
+			{% endif %}
+		{% endfor %}
+	</section>
+
+{% endblock main %}
