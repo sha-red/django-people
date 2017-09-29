@@ -16,7 +16,7 @@ setup(
     name='django-people',
     version=__import__('people').__version__,
     description='Person model, mixins and helpers for Django',
-    long_description=read('README'),
+    long_description=read('README.md'),
     author='Erik Stein',
     author_email='erik@classlibrary.net',
     # url='https://github.com/sha-red/django-people/',
