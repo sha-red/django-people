@@ -19,7 +19,7 @@ setup(
     long_description=read('README.md'),
     author='Erik Stein',
     author_email='erik@classlibrary.net',
-    # url='https://github.com/sha-red/django-people/',
+    url='https://github.com/sha-red/django-people/',
     license='BSD License',
     platforms=['OS Independent'],
     packages=find_packages(
@@ -33,7 +33,7 @@ setup(
         'django-shared-utils',
     ],
     dependency_links=[
-        'git+ssh://gogs@projects.c--y.net/erik/django-shared-utils.git#egg=django-shared-utils',
+        'git+https://github.com/sha-red/django-shared-utils.git#egg=django-shared-utils',
     ],
     extras_require={
         'all': [
