@@ -11,7 +11,6 @@ from admin_steroids.options import ImproveRawIdFieldsFormTabularInline
 from .models import PersonRole, Person, GenericParticipationRel
 
 
-@admin.register(PersonRole)
 class PersonRoleAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'id_text', 'label_de', 'label_en']
     list_editable = ['id_text', 'label_de', 'label_en']
@@ -23,8 +22,15 @@ class PersonRoleAdmin(admin.ModelAdmin):
     get_name.admin_order_field = 'name_de'
 
 
-@admin.register(Person)
-class PersonAdmin(admin.ModelAdmin):
+class PersonAdminBase(admin.ModelAdmin):
+    list_display = ['name', 'sort_name', 'slug']
+    list_display_links = ['name']
+    list_editable = ['sort_name', 'slug']
+    search_fields = ['name']
+    prepopulated_fields = {'slug': ('name',)}
+
+
+class PersonAdmin(PersonAdminBase):
     class GroupMembershipListFilter(admin.SimpleListFilter):
         title = _("Gruppe")
         parameter_name = 'group'
@@ -38,7 +44,6 @@ class PersonAdmin(admin.ModelAdmin):
             else:
                 return queryset
 
-    model = Person
     list_display = ('is_group', 'name', 'get_main_person', 'sort_name', 'slug')
     list_display_links = ('name',)
     list_editable = ('sort_name', 'slug')
@@ -47,7 +52,6 @@ class PersonAdmin(admin.ModelAdmin):
         GroupMembershipListFilter,
         '_is_main_person',
     )
-    search_fields = ('name',)
     fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -88,3 +92,7 @@ class GenericParticipationInline(ImproveRawIdFieldsFormTabularInline, GenericTab
         'person': ('name',),
     }
     extra = 0
+
+
+# admin.site.register(PersonRole, PersonRoleAdmin)
+# admin.site.register(Person, PersonAdmin)
