@@ -8,8 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from admin_steroids.options import ImproveRawIdFieldsFormTabularInline
 
-from .models import PersonRole, Person, GenericParticipationRel
-
 
 class PersonRoleAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'id_text', 'label_de', 'label_en']
@@ -36,7 +34,7 @@ class PersonAdmin(PersonAdminBase):
         parameter_name = 'group'
 
         def lookups(self, request, model_admin):
-            return Person.objects.filter(is_group=True).values_list('slug', 'name')
+            return model_admin.model.objects.filter(is_group=True).values_list('slug', 'name')
 
         def queryset(self, request, queryset):
             if self.value():
@@ -83,7 +81,7 @@ class PersonAdmin(PersonAdminBase):
 
 
 class GenericParticipationInline(ImproveRawIdFieldsFormTabularInline, GenericTabularInline):
-    model = GenericParticipationRel
+    model = 'GenericParticipationRel'
     verbose_name = _("Teilnehmer/in")
     verbose_name_plural = _("Teilnehmer/innen")
     fields = ('role', 'person', 'label', 'order_index',)
@@ -94,5 +92,6 @@ class GenericParticipationInline(ImproveRawIdFieldsFormTabularInline, GenericTab
     extra = 0
 
 
+# from .models import PersonRole, Person, GenericParticipationRel
 # admin.site.register(PersonRole, PersonRoleAdmin)
 # admin.site.register(Person, PersonAdmin)

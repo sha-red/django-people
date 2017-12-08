@@ -2,8 +2,14 @@
 
 import os
 from io import open
-
 from setuptools import find_packages, setup
+
+
+def get_version(prefix):
+    import re
+    with open(os.path.join(prefix, '__init__.py')) as fd:
+        metadata = dict(re.findall("__([a-z]+)__ = '([^']+)'", fd.read()))
+    return metadata['version']
 
 
 def read(filename):
@@ -13,8 +19,8 @@ def read(filename):
 
 
 setup(
-    name='django-people',
-    version=__import__('people').__version__,
+    name='django-shared-people',
+    version=get_version('shared/people'),
     description='Person model, mixins and helpers for Django',
     long_description=read('README.md'),
     author='Erik Stein',
@@ -25,6 +31,7 @@ setup(
     packages=find_packages(
         exclude=['tests', 'testapp']
     ),
+    namespace_packages=['shared'],
     include_package_data=True,
     install_requires=[
         # 'Django>=1.9', commented out to make `pip install -U` easier

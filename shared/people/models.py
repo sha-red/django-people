@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -82,16 +81,8 @@ class BasePerson(PolymorphicModel):
         super(BasePerson, self).save(*args, **kwargs)
 
 
-class Person(PersonController, PseudonymMixin, GroupMixin, BasePerson):
-    class Meta(BasePerson.Meta):
-        pass
-
-    def get_absolute_url(self):
-        return reverse('person-detail', kwargs={'slug': self.slug})
-
-
 @python_2_unicode_compatible
-class PersonRole(models.Model):
+class PersonRoleBase(models.Model):
     """
     Fixtures, non-deletable:
     author
@@ -107,6 +98,7 @@ class PersonRole(models.Model):
     order_index = models.IntegerField(_("Sortierung"), default=0, blank=False, null=False)
 
     class Meta:
+        abstract = True
         verbose_name = _("Funktion")
         verbose_name_plural = _("Funktionen")
         ordering = ['order_index', 'name_de', 'name_en']
@@ -124,17 +116,18 @@ class PersonRole(models.Model):
 
 
 @python_2_unicode_compatible
-class GenericParticipationRel(models.Model):
+class GenericParticipationRelBase(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    person = models.ForeignKey(Person, verbose_name=_("Person"), related_name='participations', related_query_name='participations')
-    role = models.ForeignKey(PersonRole, verbose_name=_("Funktion"))
+    person = models.ForeignKey('Person', verbose_name=_("Person"), related_name='participations', related_query_name='participations')
+    role = models.ForeignKey('PersonRole', verbose_name=_("Funktion"))
     order_index = models.IntegerField(_("Sortierung"), default=0, blank=False, null=False)
     label = models.CharField(_("Weitere Angaben"), null=True, blank=True, max_length=2000)
     # TODO Add label_en
 
     class Meta:
+        abstract = True
         verbose_name = _("Rolle/Funktion")
         verbose_name_plural = _("Rollen/Funktionen")
         ordering = ['role', 'order_index', 'person__sort_name']
