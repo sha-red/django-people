@@ -117,12 +117,16 @@ class PersonRoleBase(models.Model):
 
 @python_2_unicode_compatible
 class GenericParticipationRelBase(models.Model):
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    person = models.ForeignKey('Person', verbose_name=_("Person"), related_name='participations', related_query_name='participations')
-    role = models.ForeignKey('PersonRole', verbose_name=_("Funktion"))
+    person = models.ForeignKey('Person', verbose_name=_("Person"),
+        related_name='participations', related_query_name='participations',
+        on_delete=models.CASCADE)
+    role = models.ForeignKey('PersonRole', verbose_name=_("Funktion"),
+        on_delete=models.PROTECT)
     order_index = models.IntegerField(_("Sortierung"), default=0, blank=False, null=False)
+
     label = models.CharField(_("Weitere Angaben"), null=True, blank=True, max_length=2000)
     # TODO Add label_en
 
