@@ -35,7 +35,7 @@ setup(
     include_package_data=True,
     install_requires=[
         # 'Django>=1.9', commented out to make `pip install -U` easier
-        'django-admin-steroids',
+        # 'django-admin-steroids', #  Optional
         'django-polymorphic',
         'django-shared-utils',
     ],

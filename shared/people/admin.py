@@ -6,7 +6,12 @@ from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.utils.translation import ugettext_lazy as _
 
-from admin_steroids.options import ImproveRawIdFieldsFormTabularInline
+# django-admin-steroids is optional
+try:
+    from admin_steroids.options import ImproveRawIdFieldsFormTabularInline
+except ModuleNotFoundError:
+    class ImproveRawIdFieldsFormTabularInline(admin.TabularInline):
+        pass
 
 
 class PersonRoleAdmin(admin.ModelAdmin):
