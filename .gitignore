@@ -9,3 +9,4 @@ build
 dist
 htmlcov
 __pycache__
+_version.py
