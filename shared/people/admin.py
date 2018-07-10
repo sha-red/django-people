@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 # django-admin-steroids is optional
 try:
     from admin_steroids.options import ImproveRawIdFieldsFormTabularInline
-except ModuleNotFoundError:
+except ImportError:
     class ImproveRawIdFieldsFormTabularInline(admin.TabularInline):
         pass
 
