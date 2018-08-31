@@ -1,0 +1,8 @@
+0.4.1
+- New AutoSlugField from shared.utils (>= 0.2.5).
+
+0.4 2018-07-10
+- Fix.
+
+0.3 2018-06-12
+- First publicly versioned version.
