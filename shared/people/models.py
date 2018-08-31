@@ -10,7 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from polymorphic.models import PolymorphicModel
-from shared.utils.fields import AutoSlugField
+from shared.utils.models.slugs import DowngradingSlugField
 from shared.utils.translation import get_translated_field
 
 from .controllers import PersonController
@@ -60,7 +60,7 @@ class PseudonymMixin(models.Model):
 @python_2_unicode_compatible
 class BasePerson(PolymorphicModel):
     name = models.CharField(_("Name"), max_length=200, unique=True)
-    slug = AutoSlugField(_("URL-Name"), max_length=200, populate_from='name', unique_slug=True)
+    slug = DowngradingSlugField(_("URL-Name"), max_length=200, populate_from='name', unique_slug=True)
     sort_name = models.CharField(_("Name sortierbar"), blank=True, max_length=200)
 
     class Meta:
