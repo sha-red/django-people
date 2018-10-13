@@ -39,7 +39,7 @@ class GroupMixin(models.Model):
 
 
 class PseudonymMixin(models.Model):
-    main_person = models.ForeignKey('self', verbose_name=_("Haupteintrag"),
+    main_person = models.ForeignKey('self', verbose_name=_("Pseudonym/Schreibweise von"),
         null=True, blank=True, on_delete=models.PROTECT,
         related_name='pseudonym_set',
         help_text=_("Wenn es sich um eine alternative Schreibweise oder "
