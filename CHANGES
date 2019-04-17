@@ -1,3 +1,6 @@
+0.4.3 2019-04-17
+- Import reverse from django.urls.
+
 0.4.2
 - Admin label
 
