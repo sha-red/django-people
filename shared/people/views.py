@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 
 from django.http import HttpResponsePermanentRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic import ListView
 
 from .models import Person
